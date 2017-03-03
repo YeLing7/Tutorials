@@ -9,7 +9,13 @@ char stack[THREAD_STACKSIZE_MAIN];
 
 void *thread_handler(void *arg)
 {
-    /* ... */
+    (void) arg;
+    while (1)
+    {
+       printf("%" PRIu32 "\n",xtimer_now());
+       xtimer_usleep(2000000); 
+    }
+    
     return NULL;
 }
 
@@ -17,7 +23,7 @@ int main(void)
 {
     puts("This is Task-04");
 
-    kernel_pid_t pid = thread_create(stack, sizeof(stack),
+    thread_create(stack, sizeof(stack),
                                      THREAD_PRIORITY_MAIN - 1,
                                      THREAD_CREATE_STACKTEST,
                                      thread_handler, NULL,
